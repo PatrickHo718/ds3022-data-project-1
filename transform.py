@@ -37,7 +37,7 @@ def transform_data():
         logger.info("Dropped existing transform tables if they existed")
         flush_logs()
 
-        ''' 
+        
         con.execute("""
         CREATE TABLE IF NOT EXISTS yellow_tripdata_transform (VendorID INTEGER, tpep_pickup_datetime TIMESTAMP, tpep_dropoff_datetime TIMESTAMP, passenger_count INTEGER, trip_distance DOUBLE, co2_kg DOUBLE, avg_mph DOUBLE, trip_hours DOUBLE, trip_day INTEGER, trip_week INTEGER, trip_month INTEGER);
         """)
@@ -90,7 +90,7 @@ def transform_data():
             logger.info(f"Transformed green trip data for year {year}")
             flush_logs()
 
-            '''
+            
 
     except Exception as e:
         logger.error(f"An error occurred: {e}")
