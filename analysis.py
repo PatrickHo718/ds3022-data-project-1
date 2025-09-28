@@ -225,7 +225,7 @@ def analyze_data():
 
         # total emissions by year
         result1 = con.execute("""
-            SELECT service_type, month_of_year, SUM(trip_co2_kgs) AS total_co2_kg
+            SELECT service_type, month_of_year, AVG(trip_co2_kgs) AS total_co2_kg
             FROM (
                 SELECT 'yellow' AS service_type, month_of_year, trip_co2_kgs
                 FROM yellow_tripdata_transform
@@ -239,7 +239,7 @@ def analyze_data():
         flush_logs()
 
         result1 = con.execute("""
-            SELECT service_type, month_of_year, SUM(trip_co2_kgs) AS total_co2_kg
+            SELECT service_type, month_of_year, AVG(trip_co2_kgs) AS total_co2_kg
             FROM (
                 SELECT 'yellow' AS service_type, month_of_year, trip_co2_kgs
                 FROM yellow_tripdata_transform
@@ -253,7 +253,7 @@ def analyze_data():
         flush_logs()
 
         result2 = con.execute("""
-            SELECT service_type, month_of_year, SUM(trip_co2_kgs) AS total_co2_kg
+            SELECT service_type, month_of_year, AVG(trip_co2_kgs) AS total_co2_kg
             FROM (
                 SELECT 'green' AS service_type, month_of_year, trip_co2_kgs
                 FROM green_tripdata_transform
@@ -267,7 +267,7 @@ def analyze_data():
         flush_logs()
 
         result2 = con.execute("""
-            SELECT service_type, month_of_year, SUM(trip_co2_kgs) AS total_co2_kg
+            SELECT service_type, month_of_year, AVG(trip_co2_kgs) AS total_co2_kg
             FROM (
                 SELECT 'green' AS service_type, month_of_year, trip_co2_kgs
                 FROM green_tripdata_transform

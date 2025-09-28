@@ -89,7 +89,7 @@ def transform_data():
             """)
             logger.info(f"Transformed green trip data for year {year}")
             flush_logs()
-
+        
             
 
     except Exception as e:
