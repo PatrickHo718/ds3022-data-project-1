@@ -60,10 +60,24 @@ def analyze_data():
                 FROM yellow_tripdata_transform
             )
             GROUP BY service_type, hour_of_day
-            ORDER BY avg_co2_kg DESC;
+            ORDER BY avg_co2_kg DESC
+            LIMIT 1;
             """).fetchdf()
+        logger.info("Most Carbon Heavy by yellow taxi by hour of day:")
+        logger.info(result1.to_dict(orient='records'))
+        flush_logs()
 
-        logger.info("Average CO2 emissions by yellow taxi by hour of day:")
+        result1 = con.execute("""
+            SELECT service_type, hour_of_day, AVG(trip_co2_kgs) AS avg_co2_kg
+            FROM (
+                SELECT 'yellow' AS service_type, hour_of_day, trip_co2_kgs
+                FROM yellow_tripdata_transform
+            )
+            GROUP BY service_type, hour_of_day
+            ORDER BY avg_co2_kg ASC
+            LIMIT 1;
+            """).fetchdf()
+        logger.info("Least Carbon Heavy by yellow taxi by hour of day:")
         logger.info(result1.to_dict(orient='records'))
         flush_logs()
 
@@ -74,7 +88,22 @@ def analyze_data():
                 FROM green_tripdata_transform
             )
             GROUP BY service_type, hour_of_day
-            ORDER BY avg_co2_kg DESC;
+            ORDER BY avg_co2_kg DESC
+            LIMIT 1;
+            """).fetchdf()
+        logger.info("Average CO2 emissions by green taxi by hour of day:")
+        logger.info(result2.to_dict(orient='records'))
+        flush_logs()
+
+        result2 = con.execute("""
+            SELECT service_type, hour_of_day, AVG(trip_co2_kgs) AS avg_co2_kg
+            FROM (
+                SELECT 'green' AS service_type, hour_of_day, trip_co2_kgs
+                FROM green_tripdata_transform
+            )
+            GROUP BY service_type, hour_of_day
+            ORDER BY avg_co2_kg ASC
+            LIMIT 1;
             """).fetchdf()
         logger.info("Average CO2 emissions by green taxi by hour of day:")
         logger.info(result2.to_dict(orient='records'))
@@ -88,9 +117,24 @@ def analyze_data():
                 FROM yellow_tripdata_transform
             )
             GROUP BY service_type,  day_of_week 
-            ORDER BY avg_co2_kg DESC;
+            ORDER BY avg_co2_kg DESC
+            LIMIT 1;
         """).fetchdf()
-        logger.info("Average CO2 emissions by day of week for yellow taxi:")
+        logger.info("Most Carbon Heavy by day of week for yellow taxi:")
+        logger.info(result1.to_dict(orient='records'))
+        flush_logs()
+
+        result1 = con.execute("""
+            SELECT service_type,  day_of_week , AVG(trip_co2_kgs) AS avg_co2_kg
+            FROM (
+                SELECT 'yellow' AS service_type,  day_of_week , trip_co2_kgs
+                FROM yellow_tripdata_transform
+            )
+            GROUP BY service_type,  day_of_week 
+            ORDER BY avg_co2_kg ASC
+            LIMIT 1;
+        """).fetchdf()
+        logger.info("Least Carbon Heavy by day of week for yellow taxi:")
         logger.info(result1.to_dict(orient='records'))
         flush_logs()
 
@@ -101,9 +145,24 @@ def analyze_data():
                 FROM green_tripdata_transform
             )
             GROUP BY service_type,  day_of_week 
-            ORDER BY avg_co2_kg DESC;
+            ORDER BY avg_co2_kg DESC
+            LIMIT 1;
         """).fetchdf()
-        logger.info("Average CO2 emissions by day of week for green taxi:")
+        logger.info("Most Carbon Heavy by day of week for green taxi:")
+        logger.info(result2.to_dict(orient='records'))
+        flush_logs()
+
+        result2 = con.execute("""
+            SELECT service_type,  day_of_week , AVG(trip_co2_kgs) AS avg_co2_kg
+            FROM (
+                SELECT 'green' AS service_type,  day_of_week , trip_co2_kgs
+                FROM green_tripdata_transform
+            )
+            GROUP BY service_type,  day_of_week 
+            ORDER BY avg_co2_kg ASC
+            LIMIT 1;
+        """).fetchdf()
+        logger.info("Least Carbon Heavy by day of week for green taxi:")
         logger.info(result2.to_dict(orient='records'))
         flush_logs()
 
@@ -115,10 +174,39 @@ def analyze_data():
                 FROM yellow_tripdata_transform
             )
             GROUP BY service_type, week_of_year
-            ORDER BY avg_co2_kg DESC;
+            ORDER BY avg_co2_kg DESC
+            LIMIT 1;
         """).fetchdf()
-        logger.info("Average CO2 emissions by week of year for yellow taxi:")
+        logger.info("Most Carbon Heavy by week of year for yellow taxi:")
         logger.info(result1.to_dict(orient='records'))
+        flush_logs()
+
+        result1 = con.execute("""
+            SELECT service_type, week_of_year, AVG(trip_co2_kgs) AS avg_co2_kg
+            FROM (
+                SELECT 'yellow' AS service_type, week_of_year, trip_co2_kgs
+                FROM yellow_tripdata_transform
+            )
+            GROUP BY service_type, week_of_year
+            ORDER BY avg_co2_kg ASC
+            LIMIT 1;
+        """).fetchdf()
+        logger.info("Least Carbon Heavy by week of year for yellow taxi:")
+        logger.info(result1.to_dict(orient='records'))
+        flush_logs()         
+
+        result2 = con.execute("""
+            SELECT service_type, week_of_year, AVG(trip_co2_kgs) AS avg_co2_kg
+            FROM (
+                SELECT 'green' AS service_type, week_of_year, trip_co2_kgs
+                FROM green_tripdata_transform
+            )
+            GROUP BY service_type, week_of_year
+            ORDER BY avg_co2_kg DESC
+            LIMIT 1;
+        """).fetchdf()
+        logger.info("Most Carbon Heavy by week of year for green taxi:")
+        logger.info(result2.to_dict(orient='records'))
         flush_logs()
 
         result2 = con.execute("""
@@ -128,9 +216,10 @@ def analyze_data():
                 FROM green_tripdata_transform
             )
             GROUP BY service_type, week_of_year
-            ORDER BY avg_co2_kg DESC;
+            ORDER BY avg_co2_kg ASC
+            LIMIT 1;
         """).fetchdf()
-        logger.info("Average CO2 emissions by week of year for green taxi:")
+        logger.info("Least Carbon Heavy by week of year for green taxi:")
         logger.info(result2.to_dict(orient='records'))
         flush_logs()
 
@@ -142,9 +231,24 @@ def analyze_data():
                 FROM yellow_tripdata_transform
             )
             GROUP BY service_type, month_of_year
-            ORDER BY total_co2_kg DESC;
+            ORDER BY total_co2_kg DESC
+            LIMIT 1;
         """).fetchdf()
-        logger.info("Total CO2 emissions by year for yellow taxi:")
+        logger.info("Most Carbon Heavy by year for yellow taxi:")
+        logger.info(result1.to_dict(orient='records'))
+        flush_logs()
+
+        result1 = con.execute("""
+            SELECT service_type, month_of_year, SUM(trip_co2_kgs) AS total_co2_kg
+            FROM (
+                SELECT 'yellow' AS service_type, month_of_year, trip_co2_kgs
+                FROM yellow_tripdata_transform
+            )
+            GROUP BY service_type, month_of_year
+            ORDER BY total_co2_kg ASC
+            LIMIT 1;
+        """).fetchdf()
+        logger.info("Least Carbon Heavy by year for yellow taxi:")
         logger.info(result1.to_dict(orient='records'))
         flush_logs()
 
@@ -155,9 +259,24 @@ def analyze_data():
                 FROM green_tripdata_transform
             )
             GROUP BY service_type, month_of_year
-            ORDER BY total_co2_kg DESC;
+            ORDER BY total_co2_kg DESC
+            LIMIT 1;
         """).fetchdf()
-        logger.info("Total CO2 emissions by year for green taxi:")
+        logger.info("Most Carbon Heavy by year for green taxi:")
+        logger.info(result2.to_dict(orient='records'))
+        flush_logs()
+
+        result2 = con.execute("""
+            SELECT service_type, month_of_year, SUM(trip_co2_kgs) AS total_co2_kg
+            FROM (
+                SELECT 'green' AS service_type, month_of_year, trip_co2_kgs
+                FROM green_tripdata_transform
+            )
+            GROUP BY service_type, month_of_year
+            ORDER BY total_co2_kg ASC
+            LIMIT 1;
+        """).fetchdf()
+        logger.info("Least Carbon Heavy by year for green taxi:")
         logger.info(result2.to_dict(orient='records'))
         flush_logs()
 
