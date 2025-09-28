@@ -62,9 +62,9 @@ def transform_data():
                        (trip_distance * {yellow_co2_per_mile}) AS trip_co2_kgs,
                         (trip_distance)/NULLIF((EXTRACT(EPOCH FROM (tpep_dropoff_datetime - tpep_pickup_datetime)) / 3600), 0) AS avg_mph,
                         (EXTRACT(HOUR FROM tpep_pickup_datetime)) AS hour_of_day,
-                        (EXTRACT(DAY FROM tpep_pickup_datetime)) AS day_of_week,
+                        (strftime('%A', tpep_pickup_datetime)) AS day_of_week,
                         (EXTRACT(WEEK FROM tpep_pickup_datetime)) AS week_of_year,
-                        (EXTRACT(MONTH FROM tpep_pickup_datetime)) AS month_of_year
+                        (strftime('%m', tpep_pickup_datetime)) AS month_of_year
                 FROM yellow_tripdata_clean
                 WHERE EXTRACT(YEAR FROM tpep_pickup_datetime) = {year};
             """)
@@ -81,9 +81,9 @@ def transform_data():
                        (trip_distance * {green_co2_per_mile}) AS trip_co2_kgs,
                         (trip_distance)/NULLIF((EXTRACT(EPOCH FROM (lpep_dropoff_datetime - lpep_pickup_datetime)) / 3600), 0) AS avg_mph,
                         (EXTRACT(HOUR FROM lpep_pickup_datetime)) AS hour_of_day,
-                        (EXTRACT(DAY FROM lpep_pickup_datetime)) AS day_of_week,
+                        (strftime('%A', lpep_pickup_datetime)) AS day_of_week,
                         (EXTRACT(WEEK FROM lpep_pickup_datetime)) AS week_of_year,
-                        (EXTRACT(MONTH FROM lpep_pickup_datetime)) AS month_of_year
+                        (strftime('%m', lpep_pickup_datetime)) AS month_of_year
                 FROM green_tripdata_clean
                 WHERE EXTRACT(YEAR FROM lpep_pickup_datetime) = {year};
             """)
