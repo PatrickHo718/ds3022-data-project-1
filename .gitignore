@@ -10,3 +10,7 @@ __pycache__/
 # dbt build artifacts
 dbt/logs/
 dbt/target/
+
+# duckdb database files
+*.duckdb
+*.parquet
